@@ -51,13 +51,13 @@ const ListMenuChild = () => {
     setPagination({ ...pagination, page: val ?? 1 });
   };
   const handleClickCreate = (val) => {
-    history.push(`/administrator/menu_child/create`);
+    history.push(`/system/menu_child/create`);
   };
   const handleClickRead = (item) => {
-    history.push(`/administrator/menu_child/read/${item.menu_child_id}`);
+    history.push(`/system/menu_child/read/${item.menu_child_id}`);
   };
   const handleClickUpdate = (item) => {
-    history.push(`/administrator/menu_child/update/${item.menu_child_id}`);
+    history.push(`/system/menu_child/update/${item.menu_child_id}`);
   };
   const handleClickDelete = (item) => {
     confirmAlert({

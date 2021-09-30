@@ -59,6 +59,13 @@ const FormRoleSection = React.lazy(() =>
   import("./views/administrator/role_section/FormRoleSection")
 );
 
+
+
+// RESTO 
+// ========================================================================
+const ListRestoBranch = React.lazy(() => import("./views/resto/master/branch/ListRestoBranch"));
+const FormRestoBranch = React.lazy(() => import("./views/resto/master/branch/FormRestoBranch"));
+
 const routes = [
   { path: "/login", name: "Login", component: Login },
   { path: "/404", name: "404", component: Page404 },
@@ -169,6 +176,25 @@ const routes = [
     path: "/administrator/role_section",
     name: "Role Section",
     component: ListRoleSection,
+  },
+
+
+  // RESTO
+
+  {
+    path: "/master_resto/branch/:type/:id",
+    name: "Manage",
+    component: FormRestoBranch,
+  },
+  {
+    path: "/master_resto/branch/:type",
+    name: "Add",
+    component: FormRestoBranch,
+  },
+  {
+    path: "/master_resto/branch",
+    name: "Master Branch",
+    component: ListRestoBranch,
   },
 ];
 

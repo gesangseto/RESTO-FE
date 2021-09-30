@@ -1,28 +1,25 @@
-import CIcon from "@coreui/icons-react";
 import {
-  CBadge,
-  CButton,
-  CCard,
+  CBadge, CCard,
   CCardBody,
   CCardHeader,
   CCol,
   CDataTable,
   CPagination,
-  CRow,
+  CRow
 } from "@coreui/react";
 import React, { useEffect, useState } from "react";
-import { ButtonPermission } from "../../../reusable";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useHistory, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import $axios from "../../../api";
+import $axios from "../../../../api";
+import { ButtonPermission } from "../../../../reusable";
 
-const ListMenuParent = () => {
+const ListRestoBranch = () => {
   const history = useHistory();
   const location = useLocation().pathname.split("/");
-  const pathParent = location[1].replace(/[^a-zA-Z0-9-]/g, " ");
-  const pathChild = location[2].replace(/[^a-zA-Z0-9-]/g, " ");
+  const pathParent = location[1];
+  const pathChild = location[2];
   const pathOperation = location[3];
   const [pagination, setPagination] = useState({ page: 1, size: 10 });
   const [totalPage, setTotalPage] = useState(0);
@@ -31,7 +28,9 @@ const ListMenuParent = () => {
 
   useEffect(() => {
     $axios
-      .get(`menu/parent?page=${pagination.page}&limit=${pagination.size}`)
+      .get(
+        `resto/branch?page=${pagination.page}&limit=${pagination.size}`
+      )
       .then((res) => {
         console.table(res.data.data);
         setListData(res.data.data);
@@ -51,13 +50,13 @@ const ListMenuParent = () => {
     setPagination({ ...pagination, page: val ?? 1 });
   };
   const handleClickCreate = (val) => {
-    history.push(`/system/menu_parent/create`);
+    history.push(`/master_resto/branch/create`);
   };
   const handleClickRead = (item) => {
-    history.push(`/system/menu_parent/read/${item.menu_parent_id}`);
+    history.push(`/master_resto/branch/read/${item.resto_branch_id}`);
   };
   const handleClickUpdate = (item) => {
-    history.push(`/system/menu_parent/update/${item.menu_parent_id}`);
+    history.push(`/master_resto/branch/update/${item.resto_branch_id}`);
   };
   const handleClickDelete = (item) => {
     confirmAlert({
@@ -70,9 +69,9 @@ const ListMenuParent = () => {
         {
           label: "Yes",
           onClick: () => {
-            var body = { data: { menu_parent_id: item.menu_parent_id } };
+            var body = { data: { resto_branch_id: item.resto_branch_id } };
             console.log(body);
-            $axios.delete(`menu/parent`, body).then((res) => {
+            $axios.delete(`resto/branch`, body).then((res) => {
               if (res.data.error) toast.error(`${res.data.message}`);
               else toast.success(`${res.data.message}`);
               setLoadData(!loadData);
@@ -84,10 +83,11 @@ const ListMenuParent = () => {
   };
 
   const fields = [
-    { key: "menu_parent_id", label: "ID" },
-    { key: "menu_parent_name", label: "Menu Parent Name" },
-    { key: "menu_parent_url", label: "URL" },
-    { key: "menu_parent_icon", label: "Icon" },
+    { key: "resto_branch_id", label: "ID" },
+    { key: "resto_branch_name", label: "Name" },
+    { key: "resto_branch_description", label: "Description" },
+    { key: "resto_branch_address", label: "Address" },
+    { key: "resto_branch_phone", label: "Phone" },
     { key: "status", label: "Status" },
     { key: "id", label: "Action" },
   ];
@@ -184,4 +184,4 @@ const ListMenuParent = () => {
   );
 };
 
-export default ListMenuParent;
+export default ListRestoBranch;
