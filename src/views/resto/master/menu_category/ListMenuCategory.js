@@ -16,11 +16,11 @@ import { toast } from "react-toastify";
 import $axios from "../../../../api";
 import { ButtonPermission } from "../../../../reusable";
 
-const ListRestoBranch = () => {
+const ListMenuCategory = () => {
   const history = useHistory();
   const location = useLocation().pathname.split("/");
-  const pathParent = location[1];
-  const pathChild = location[2];
+  const pathParent = location[1].replace(/[^a-zA-Z0-9-]/g, " ");
+  const pathChild = location[2].replace(/[^a-zA-Z0-9-]/g, " ");
   const pathOperation = location[3];
   const [pagination, setPagination] = useState({ page: 1, size: 10 });
   const [totalPage, setTotalPage] = useState(0);
@@ -29,7 +29,9 @@ const ListRestoBranch = () => {
 
   useEffect(() => {
     $axios
-      .get(`resto/branch?page=${pagination.page}&limit=${pagination.size}`)
+      .get(
+        `resto/menu_category?page=${pagination.page}&limit=${pagination.size}`
+      )
       .then((res) => {
         console.table(res.data.data);
         setListData(res.data.data);
@@ -52,11 +54,13 @@ const ListRestoBranch = () => {
     history.push(`/${location[1]}/${location[2]}/create`);
   };
   const handleClickRead = (item) => {
-    history.push(`/${location[1]}/${location[2]}/read/${item.resto_branch_id}`);
+    history.push(
+      `/${location[1]}/${location[2]}/read/${item.resto_menu_category_id}`
+    );
   };
   const handleClickUpdate = (item) => {
     history.push(
-      `/${location[1]}/${location[2]}/update/${item.resto_branch_id}`
+      `/${location[1]}/${location[2]}/update/${item.resto_menu_category_id}`
     );
   };
   const handleClickDelete = (item) => {
@@ -70,9 +74,11 @@ const ListRestoBranch = () => {
         {
           label: "Yes",
           onClick: () => {
-            var body = { data: { resto_branch_id: item.resto_branch_id } };
+            var body = {
+              data: { resto_menu_category_id: item.resto_menu_category_id },
+            };
             console.log(body);
-            $axios.delete(`resto/branch`, body).then((res) => {
+            $axios.delete(`resto/menu_category`, body).then((res) => {
               if (res.data.error) toast.error(`${res.data.message}`);
               else toast.success(`${res.data.message}`);
               setLoadData(!loadData);
@@ -84,24 +90,12 @@ const ListRestoBranch = () => {
   };
 
   const fields = [
-    { key: "resto_branch_id", label: "ID" },
-    { key: "resto_branch_name", label: "Name" },
-    { key: "resto_branch_description", label: "Description" },
-    { key: "resto_branch_address", label: "Address" },
-    { key: "resto_branch_phone", label: "Phone" },
+    { key: "resto_menu_category_id", label: "ID" },
+    { key: "resto_menu_category_name", label: "Name" },
+    { key: "resto_menu_category_description", label: "Description" },
     { key: "status", label: "Status" },
     { key: "id", label: "Action" },
   ];
-
-  const getBadge = (status) => {
-    console.log(status);
-    switch (status) {
-      case "1":
-        return "success";
-      case "2":
-        return "danger";
-    }
-  };
 
   return (
     <>
@@ -185,4 +179,4 @@ const ListRestoBranch = () => {
   );
 };
 
-export default ListRestoBranch;
+export default ListMenuCategory;

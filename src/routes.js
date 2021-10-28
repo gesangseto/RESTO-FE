@@ -59,12 +59,21 @@ const FormRoleSection = React.lazy(() =>
   import("./views/administrator/role_section/FormRoleSection")
 );
 
-
-
-// RESTO 
+// RESTO
 // ========================================================================
-const ListRestoBranch = React.lazy(() => import("./views/resto/master/branch/ListRestoBranch"));
-const FormRestoBranch = React.lazy(() => import("./views/resto/master/branch/FormRestoBranch"));
+const ListRestoBranch = React.lazy(() =>
+  import("./views/resto/master/branch/ListRestoBranch")
+);
+const FormRestoBranch = React.lazy(() =>
+  import("./views/resto/master/branch/FormRestoBranch")
+);
+
+const ListMenuCategory = React.lazy(() =>
+  import("./views/resto/master/menu_category/ListMenuCategory")
+);
+const FormMenuCategory = React.lazy(() =>
+  import("./views/resto/master/menu_category/FormMenuCategory")
+);
 
 const routes = [
   { path: "/login", name: "Login", component: Login },
@@ -178,7 +187,6 @@ const routes = [
     component: ListRoleSection,
   },
 
-
   // RESTO
 
   {
@@ -195,6 +203,22 @@ const routes = [
     path: "/master_resto/branch",
     name: "Master Branch",
     component: ListRestoBranch,
+  },
+
+  {
+    path: "/master_resto/menu_category/:type/:id",
+    name: "Manage",
+    component: FormMenuCategory,
+  },
+  {
+    path: "/master_resto/menu_category/:type",
+    name: "Add",
+    component: FormMenuCategory,
+  },
+  {
+    path: "/master_resto/menu_category",
+    name: "Master Menu Category",
+    component: ListMenuCategory,
   },
 ];
 
