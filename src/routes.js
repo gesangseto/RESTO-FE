@@ -75,6 +75,9 @@ const FormMenuCategory = React.lazy(() =>
   import("./views/resto/master/menu_category/FormMenuCategory")
 );
 
+const ListMenu = React.lazy(() => import("./views/resto/master/menu/ListMenu"));
+const FormMenu = React.lazy(() => import("./views/resto/master/menu/FormMenu"));
+
 const routes = [
   { path: "/login", name: "Login", component: Login },
   { path: "/404", name: "404", component: Page404 },
@@ -219,6 +222,22 @@ const routes = [
     path: "/master_resto/menu_category",
     name: "Master Menu Category",
     component: ListMenuCategory,
+  },
+
+  {
+    path: "/master_resto/menu/:type/:id",
+    name: "Manage",
+    component: FormMenu,
+  },
+  {
+    path: "/master_resto/menu/:type",
+    name: "Add",
+    component: FormMenu,
+  },
+  {
+    path: "/master_resto/menu",
+    name: "Master Menu",
+    component: ListMenu,
   },
 ];
 
